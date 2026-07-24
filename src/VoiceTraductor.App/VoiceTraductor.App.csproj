@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\voicetraductor.ico</ApplicationIcon>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <AssemblyName>VoiceTraductor</AssemblyName>
+    <RootNamespace>VoiceTraductor.App</RootNamespace>
+    <Version>1.0.0</Version>
+    <Product>VoiceTraductor</Product>
+    <Description>Intérprete bidireccional en tiempo real para reuniones virtuales.</Description>
+    <RepositoryUrl>https://github.com/IAZARA/Proyecto_Voice_Traduccion</RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VoiceTraductor.Core\VoiceTraductor.Core.csproj" />
+    <ProjectReference Include="..\VoiceTraductor.Infrastructure\VoiceTraductor.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\voicetraductor-icon.png" />
+  </ItemGroup>
+</Project>

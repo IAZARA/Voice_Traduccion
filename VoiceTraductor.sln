@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceTraductor.Core", "src\VoiceTraductor.Core\VoiceTraductor.Core.csproj", "{B9D05228-0B3A-45E4-9320-5F91C6307C2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceTraductor.Infrastructure", "src\VoiceTraductor.Infrastructure\VoiceTraductor.Infrastructure.csproj", "{6B78E9DB-7584-4B9E-B966-689521096496}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceTraductor.App", "src\VoiceTraductor.App\VoiceTraductor.App.csproj", "{24728AA1-07F1-4AF8-8DF4-68C875432275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceTraductor.Tests", "tests\VoiceTraductor.Tests\VoiceTraductor.Tests.csproj", "{93B9CA16-941F-4164-AD1E-717D79A05DD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9D05228-0B3A-45E4-9320-5F91C6307C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9D05228-0B3A-45E4-9320-5F91C6307C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9D05228-0B3A-45E4-9320-5F91C6307C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9D05228-0B3A-45E4-9320-5F91C6307C2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B78E9DB-7584-4B9E-B966-689521096496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B78E9DB-7584-4B9E-B966-689521096496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B78E9DB-7584-4B9E-B966-689521096496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B78E9DB-7584-4B9E-B966-689521096496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24728AA1-07F1-4AF8-8DF4-68C875432275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24728AA1-07F1-4AF8-8DF4-68C875432275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24728AA1-07F1-4AF8-8DF4-68C875432275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24728AA1-07F1-4AF8-8DF4-68C875432275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B9CA16-941F-4164-AD1E-717D79A05DD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B9CA16-941F-4164-AD1E-717D79A05DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B9CA16-941F-4164-AD1E-717D79A05DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B9CA16-941F-4164-AD1E-717D79A05DD6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

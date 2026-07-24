@@ -1,0 +1,69 @@
+<Window
+    x:Class="VoiceTraductor.App.OverlayWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Subtítulos de VoiceTraductor"
+    Width="780"
+    Height="190"
+    MinWidth="520"
+    MinHeight="150"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="CanResizeWithGrip"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowStyle="None">
+    <Border
+        Margin="8"
+        Padding="22"
+        Background="#E6121928"
+        BorderBrush="#4062D9C7"
+        BorderThickness="1"
+        CornerRadius="14"
+        MouseLeftButtonDown="Root_MouseLeftButtonDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Foreground="{StaticResource AccentBrush}"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Text="TRADUCCIÓN EN VIVO"/>
+                <Border
+                    Grid.Column="1"
+                    Padding="9,4"
+                    Background="{StaticResource SurfaceRaisedBrush}"
+                    CornerRadius="10">
+                    <TextBlock
+                        FontSize="11"
+                        FontWeight="Bold"
+                        Text="{Binding OutgoingState}"/>
+                </Border>
+            </Grid>
+            <TextBlock
+                Grid.Row="1"
+                Margin="0,10,0,8"
+                VerticalAlignment="Center"
+                FontSize="27"
+                FontWeight="SemiBold"
+                Text="{Binding OverlayTranslation}"
+                TextAlignment="Center"
+                TextWrapping="Wrap"/>
+            <TextBlock
+                Grid.Row="2"
+                Foreground="{StaticResource MutedTextBrush}"
+                FontSize="14"
+                Text="{Binding OverlayOriginal}"
+                TextAlignment="Center"
+                TextWrapping="Wrap"/>
+        </Grid>
+    </Border>
+</Window>

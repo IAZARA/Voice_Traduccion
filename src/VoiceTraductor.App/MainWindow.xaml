@@ -1,0 +1,497 @@
+<Window
+    x:Class="VoiceTraductor.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="VoiceTraductor"
+    Width="1120"
+    Height="760"
+    MinWidth="920"
+    MinHeight="640"
+    Icon="Assets/voicetraductor-icon.png"
+    Background="{StaticResource BackgroundBrush}"
+    Foreground="{StaticResource TextBrush}"
+    FontFamily="Segoe UI Variable Text"
+    Loaded="MainWindow_Loaded"
+    WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+        <Style x:Key="Label" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource MutedTextBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="26">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0,0,0,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Image
+                    Width="54"
+                    Height="54"
+                    Margin="0,0,14,0"
+                    Source="Assets/voicetraductor-icon.png"
+                    Stretch="Uniform"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock FontSize="28" FontWeight="Bold" Text="VoiceTraductor"/>
+                    <TextBlock
+                        Margin="0,4,0,0"
+                        Foreground="{StaticResource MutedTextBrush}"
+                        Text="Interpretación inglés ↔ español para reuniones"/>
+                </StackPanel>
+            </StackPanel>
+            <Border
+                Grid.Column="1"
+                Padding="12,7"
+                Background="{StaticResource SurfaceRaisedBrush}"
+                CornerRadius="18">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse
+                        Width="8"
+                        Height="8"
+                        Margin="0,0,8,0"
+                        Fill="{StaticResource AccentBrush}"/>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="{Binding IncomingState}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <TabControl
+            x:Name="MainTabs"
+            Grid.Row="1"
+            Background="Transparent"
+            BorderThickness="0">
+            <TabItem Header="Reunión">
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="18"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="14"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Foreground="{StaticResource AccentBrush}"
+                                    FontSize="13"
+                                    FontWeight="Bold"
+                                    Text="ELLA · INGLÉS → ESPAÑOL"/>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="0,16,0,12"
+                                    VerticalAlignment="Center"
+                                    FontSize="28"
+                                    FontWeight="SemiBold"
+                                    Text="{Binding IncomingTranslation}"
+                                    TextWrapping="Wrap"/>
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Foreground="{StaticResource MutedTextBrush}"
+                                    FontSize="15"
+                                    Text="{Binding IncomingOriginal}"
+                                    TextWrapping="Wrap"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="2" Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Foreground="{StaticResource AccentBlueBrush}"
+                                    FontSize="13"
+                                    FontWeight="Bold"
+                                    Text="TÚ · ESPAÑOL → INGLÉS"/>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="0,16,0,12"
+                                    VerticalAlignment="Center"
+                                    FontSize="26"
+                                    FontWeight="SemiBold"
+                                    Text="{Binding OutgoingTranslation}"
+                                    TextWrapping="Wrap"/>
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Foreground="{StaticResource MutedTextBrush}"
+                                    FontSize="15"
+                                    Text="{Binding OutgoingOriginal}"
+                                    TextWrapping="Wrap"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Column="2" Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Text="Control de sesión"/>
+
+                            <TextBlock Margin="0,24,0,6" Style="{StaticResource Label}" Text="Audio entrante"/>
+                            <ProgressBar
+                                Height="7"
+                                Maximum="100"
+                                Value="{Binding IncomingLevelPercent, Mode=OneWay}"/>
+                            <TextBlock Margin="0,16,0,6" Style="{StaticResource Label}" Text="Micrófono"/>
+                            <ProgressBar
+                                Height="7"
+                                Maximum="100"
+                                Value="{Binding MicrophoneLevelPercent, Mode=OneWay}"/>
+
+                            <TextBlock Margin="0,24,0,6" Style="{StaticResource Label}" Text="Volumen traducido"/>
+                            <Slider
+                                Maximum="1"
+                                Minimum="0"
+                                Value="{Binding TranslationVolume, Mode=TwoWay}"/>
+                            <TextBlock Margin="0,14,0,6" Style="{StaticResource Label}" Text="Audio original"/>
+                            <Slider
+                                Maximum="1"
+                                Minimum="0"
+                                Value="{Binding OriginalVolume, Mode=TwoWay}"/>
+
+                            <Button
+                                x:Name="StartButton"
+                                Margin="0,28,0,0"
+                                Click="StartButton_Click"
+                                IsEnabled="{Binding CanStartMeeting}"
+                                Content="Iniciar reunión"/>
+                            <Button
+                                Margin="0,10,0,0"
+                                Click="StopButton_Click"
+                                Content="Finalizar y guardar">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+
+                            <Button
+                                x:Name="PttButton"
+                                Margin="0,20,0,0"
+                                Padding="20,24"
+                                PreviewMouseLeftButtonDown="PttButton_Down"
+                                PreviewMouseLeftButtonUp="PttButton_Up"
+                                LostMouseCapture="PttButton_LostMouseCapture"
+                                Background="{StaticResource AccentBlueBrush}"
+                                IsEnabled="{Binding IsRunning}"
+                                Content="MANTENER PARA HABLAR · F8"/>
+                            <TextBlock
+                                Margin="0,12,0,0"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource MutedTextBrush}"
+                                Text="Solo se transmite tu micrófono mientras mantienes pulsado"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Configuración">
+                <ScrollViewer Margin="0,18,0,0" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Border Margin="0,0,0,14" Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="54"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Width="38"
+                                    Height="38"
+                                    Background="{StaticResource SurfaceRaisedBrush}"
+                                    CornerRadius="19">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="18"
+                                        FontWeight="Bold"
+                                        Text="1"/>
+                                </Border>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontSize="17" FontWeight="Bold" Text="Instala y configura VoiceMeeter Banana"/>
+                                    <TextBlock
+                                        Margin="0,5,0,0"
+                                        Foreground="{StaticResource MutedTextBrush}"
+                                        Text="En la tira VoiceMeeter VAIO activa solo B1; en AUX activa solo B2. Reinicia Windows tras instalarlo."
+                                        TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock
+                                        Margin="0,0,0,8"
+                                        HorizontalAlignment="Center"
+                                        Foreground="{StaticResource AccentBrush}"
+                                        Text="{Binding HasVoiceMeeter, StringFormat=Detectado: {0}}"/>
+                                    <Button
+                                        Click="OpenVoiceMeeter_Click"
+                                        Style="{StaticResource SecondaryButton}"
+                                        Content="Sitio oficial"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Margin="0,0,0,14" Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="54"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Width="38"
+                                    Height="38"
+                                    Background="{StaticResource SurfaceRaisedBrush}"
+                                    CornerRadius="19">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="18"
+                                        FontWeight="Bold"
+                                        Text="2"/>
+                                </Border>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontSize="17" FontWeight="Bold" Text="Valida tu API key"/>
+                                    <TextBlock
+                                        Margin="0,5,0,12"
+                                        Foreground="{StaticResource MutedTextBrush}"
+                                        Text="La clave se cifra con DPAPI y nunca se guarda en la transcripción ni en logs."/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="12"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <PasswordBox x:Name="ApiKeyBox"/>
+                                        <Button
+                                            Grid.Column="2"
+                                            Click="SaveApiKey_Click"
+                                            Content="Validar y guardar"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="54"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Width="38"
+                                    Height="38"
+                                    Background="{StaticResource SurfaceRaisedBrush}"
+                                    CornerRadius="19">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="18"
+                                        FontWeight="Bold"
+                                        Text="3"/>
+                                </Border>
+                                <StackPanel Grid.Column="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock FontSize="17" FontWeight="Bold" Text="Selecciona las cuatro rutas"/>
+                                        <Button
+                                            Grid.Column="1"
+                                            Click="RefreshDevices_Click"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Content="Actualizar"/>
+                                    </Grid>
+
+                                    <Grid Margin="0,18,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource Label}" Text="Audio de la reunión (B1)"/>
+                                            <ComboBox
+                                                ItemsSource="{Binding CaptureEndpoints}"
+                                                DisplayMemberPath="Name"
+                                                SelectedItem="{Binding MeetingCapture}"/>
+                                            <TextBlock Margin="0,14,0,6" Style="{StaticResource Label}" Text="Tu micrófono físico"/>
+                                            <ComboBox
+                                                ItemsSource="{Binding CaptureEndpoints}"
+                                                DisplayMemberPath="Name"
+                                                SelectedItem="{Binding MicrophoneCapture}"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Style="{StaticResource Label}" Text="Tus auriculares físicos"/>
+                                            <ComboBox
+                                                ItemsSource="{Binding RenderEndpoints}"
+                                                DisplayMemberPath="Name"
+                                                SelectedItem="{Binding HeadphonesRender}"/>
+                                            <TextBlock Margin="0,14,0,6" Style="{StaticResource Label}" Text="Micrófono virtual de la reunión (AUX/B2)"/>
+                                            <ComboBox
+                                                ItemsSource="{Binding RenderEndpoints}"
+                                                DisplayMemberPath="Name"
+                                                SelectedItem="{Binding MeetingMicrophoneRender}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Button
+                                        Width="190"
+                                        Margin="0,20,0,0"
+                                        HorizontalAlignment="Left"
+                                        Click="SaveConfiguration_Click"
+                                        Content="Guardar dispositivos"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Historial">
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="330"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource Card}">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Bottom" Margin="0,14,0,0">
+                                <Button
+                                    Click="DeleteSelected_Click"
+                                    Style="{StaticResource SecondaryButton}"
+                                    IsEnabled="{Binding HasSelectedMeeting}"
+                                    Content="Eliminar seleccionada"/>
+                                <Button
+                                    Margin="0,8,0,0"
+                                    Click="DeleteAll_Click"
+                                    Style="{StaticResource SecondaryButton}"
+                                    Content="Borrar todo"/>
+                            </StackPanel>
+                            <ListBox
+                                ItemsSource="{Binding Meetings}"
+                                SelectedItem="{Binding SelectedMeeting}"
+                                Background="Transparent"
+                                BorderThickness="0">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="4,8">
+                                            <TextBlock
+                                                FontWeight="SemiBold"
+                                                Text="{Binding StartedAt, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
+                                            <TextBlock
+                                                Margin="0,3,0,0"
+                                                Foreground="{StaticResource MutedTextBrush}"
+                                                Text="{Binding Status}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource Card}">
+                        <DockPanel>
+                            <StackPanel
+                                DockPanel.Dock="Bottom"
+                                Margin="0,14,0,0"
+                                Orientation="Horizontal">
+                                <Button
+                                    Click="ExportText_Click"
+                                    IsEnabled="{Binding HasSelectedMeeting}"
+                                    Content="Exportar TXT"/>
+                                <Button
+                                    Margin="10,0,0,0"
+                                    Click="ExportVtt_Click"
+                                    Style="{StaticResource SecondaryButton}"
+                                    IsEnabled="{Binding HasSelectedMeeting}"
+                                    Content="Exportar VTT"/>
+                            </StackPanel>
+                            <ListBox
+                                ItemsSource="{Binding SelectedMeetingSegments}"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border
+                                            Margin="0,0,0,10"
+                                            Padding="14"
+                                            Background="{StaticResource SurfaceRaisedBrush}"
+                                            CornerRadius="9">
+                                            <StackPanel>
+                                                <TextBlock
+                                                    Foreground="{StaticResource AccentBrush}"
+                                                    FontSize="12"
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Direction}"/>
+                                                <TextBlock
+                                                    Margin="0,7,0,0"
+                                                    FontSize="16"
+                                                    Text="{Binding TranslatedText}"
+                                                    TextWrapping="Wrap"/>
+                                                <TextBlock
+                                                    Margin="0,5,0,0"
+                                                    Foreground="{StaticResource MutedTextBrush}"
+                                                    Text="{Binding SourceText}"
+                                                    TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Border
+            Grid.Row="2"
+            Margin="0,18,0,0"
+            Padding="14,10"
+            Background="{StaticResource SurfaceRaisedBrush}"
+            CornerRadius="9">
+            <TextBlock
+                Foreground="{StaticResource MutedTextBrush}"
+                Text="{Binding StatusMessage}"
+                TextWrapping="Wrap"/>
+        </Border>
+    </Grid>
+</Window>
